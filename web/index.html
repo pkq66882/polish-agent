@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Polish Agent</title></head>
+<body>
+<textarea id="input"></textarea>
+<button onclick="go()">润色</button>
+
+<h3>Formal</h3><p id="f"></p>
+<h3>Neutral</h3><p id="n"></p>
+<h3>Friendly</h3><p id="fr"></p>
+
+<script>
+async function go(){
+ let t=document.getElementById("input").value;
+ let r=await fetch("http://127.0.0.1:8000/polish",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({text:t})
+ });
+ let d=await r.json();
+ document.getElementById("f").innerText=d.formal;
+ document.getElementById("n").innerText=d.neutral;
+ document.getElementById("fr").innerText=d.friendly;
+}
+</script>
+</body>
+</html>
